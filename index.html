@@ -12,8 +12,9 @@
 
 </head>
 <body>
-    <header>
-        <h1 class="text-center text-warning bg-dark p-3 m-0">MOON MINER</h1>
+    <header class="d-flex flex-column text-center p-3">
+        <h1 class="text-warning m-0">MOON MINER</h1>
+        <h6 class="text-warning m-0">Lifetime Cheese: <span id="lifetime-resource">0</span></h6>
         
     </header>
     <main>
@@ -21,36 +22,53 @@
             <div class="row">
 
                 <!-- NOTE click target -->
-                <div id="click-target" onclick="click()" class="col-md-4 col-12 order-md-2 order-1">
-                    <p style="user-select: none">test click</p>
+                <div id="click-target" onclick="clickTarget()" class="col-md-4 col-12 order-md-2 order-1 px-2">
 
-                    <!-- begin click-target template -->
-                    <!-- end click-target template -->
+                    <!-- begin click-target children -->
+                    <!-- end click-target children -->
                     
                 </div>
                 
                 <!-- NOTE stats -->
-                <div id="stats" class="col-md-4 col-12 order-md-1 order-3">
-
-                    <!-- begin stats template -->
-                    <!-- end stats template -->
-
+                <div class="col-md-4 col-12 order-md-1 order-3 text-center">
+                    <h1 class="text-warning m-0">STATS</h1>
+                    <div id="stats" class="rounded px-2 text-start ps-3">
+                        
+                        <!-- begin stats children -->
+                        <p class="my-2 text-warning fs-3 text-center">Total per second: <span id="total">0</span></p>
+                        <hr class="my-1">
+                        <p class="my-2 text-warning">Manual Clicks/second: <span id="manual-cps">0</span></p>
+                        <p class="my-2 text-warning">Auto Clicks/second: <span id="auto-cps">0</span></p>
+                        <p class="my-2 text-warning">Auto Gain/second: <span id="auto-gps">0</span></p>
+                        <hr class="my-1">
+                        <p class="my-2 text-warning">Click Multiplier: x<span id="clickMultipler">0</span></p>
+                        <p class="my-2 text-warning">Global Multiplier: x<span id="globalMultipler">0</span></p>
+                        <!-- end stats children -->
+                        
+                    </div>
                 </div>
 
                 <!-- NOTE inventory -->
-                <div id="inventory" class="col-md-4 col-12 order-md-3 order-4">
+                <div class="col-md-4 col-12 order-md-3 order-4 text-center">
+                    <h1 class="text-warning m-0">INVENTORY</h1>
+                    <div id="inventory" class="rounded px-2">
+                        
+                        <!-- begin inventory children -->
+                        <p class="my-2 text-warning">Cheese: <span id="current-resource">0</span></p>
+                        <!-- end stats children -->
 
-                    <!-- begin inventory template -->
-                    <!-- end stats template -->
-
+                    </div>
                 </div>
 
                 <!-- NOTE store -->
-                <div id="store" class="col-md-6 col-12 order-md-4 order-2">
-
-                    <!-- begin store template -->
-                    <!-- end store template -->
-
+                <div class="col-md-6 col-12 order-md-4 order-2 mt-3">
+                    <h1 class="text-warning my-2">SHOP</h1>
+                    <div id="store" class="rounded px-2">
+                        
+                        <!-- begin store children -->
+                        <!-- end store children -->
+                        
+                    </div>
                 </div>
 
             </div>

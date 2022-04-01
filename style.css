@@ -1,6 +1,6 @@
 body
 {
-    background-color: navy;
+    background-color: rgb(0, 0, 72);
     min-height: 100vh;
     display: flex;
     flex-direction: column;
@@ -9,4 +9,15 @@ body
 main
 {
     flex-grow: 1;
+}
+
+#stats, #inventory, #store
+{
+    background-color: rgba(49, 87, 100, 0.6);
+    border: 3px solid rgba(173, 216, 230, 0.6);
+}
+
+#click-target
+{
+    min-height: 50vh;
 }
