@@ -1,5 +1,7 @@
 // TODO balance changes
 // TODO fix click frequency being slow
+// TODO add saving
+// TODO add grouping large mumbers by size (10k 10m 10b 10t etc)
 // #region variables
 
 const player = 
@@ -46,10 +48,10 @@ const upgrades =
         {
             name: "Pickaxe",
             shopname: "⛏️",
-            growBase: 10,
-            growFactor: 0,
+            growBase: 50,
+            growFactor: 1,
             owned: 0,
-            costConstant: 10,
+            costConstant: 50,
             priceFunction: linear,
             efficacy: 1
         }
@@ -61,10 +63,10 @@ const upgrades =
         {
             name: "Hire Worker",
             shopname: "👷",
-            growBase: 10,
-            growFactor: 1,
+            growBase: 500,
+            growFactor: 1.5,
             owned: 0,
-            costConstant: 10,
+            costConstant: 1000,
             priceFunction: exponential,
             efficacy: 1.5
         }
@@ -76,8 +78,8 @@ const upgrades =
         {
             name: "Research Fabrication",
             shopname: "⚛️",
-            growBase: 10,
-            growFactor: 1,
+            growBase: 200,
+            growFactor: 2,
             owned: 0,
             costConstant: 10,
             priceFunction: exponential,
@@ -91,11 +93,11 @@ const upgrades =
         {
             name: "Improptu Cooperation",
             shopname: "🤝",
-            growBase: 10,
-            growFactor: 0,
+            growBase: 10000,
+            growFactor: 1.8,
             owned: 0,
-            costConstant: 10,
-            priceFunction: linear,
+            costConstant: 10000,
+            priceFunction: exponential,
             efficacy: 1.5
         }
     }
@@ -125,8 +127,8 @@ let elements =
 
 function clickTarget()
 {
-    player.resource += calculateclickMultiplier();
-    player.lifetimeResource += calculateclickMultiplier();
+    player.resource += calculateclickMultiplier() * calculateGlobalMultiplier();
+    player.lifetimeResource += calculateclickMultiplier() * calculateGlobalMultiplier();
     player.clicks += 1;
 
     drawInventory();
@@ -248,17 +250,17 @@ function purchaseUpgrade(category, upgrade)
 
 function getItemCost(item)
 {
-    return item.priceFunction(item.growBase, item.growFactor, item.owned, item.costConstant);
+    return Math.floor(item.priceFunction(item.growBase, item.growFactor, item.owned, item.costConstant));
 }
 
 function linear(growBase, growFactor, owned, costConstant)
 {
-    return growBase * (1 + (growFactor * owned)) + costConstant;
+    return growBase * ((growFactor * owned)) + costConstant;
 }
 
 function exponential(growBase, growFactor, owned, costConstant)
 {
-    return growBase * (growFactor ** (owned - 1)) + costConstant;
+    return growBase * ((growFactor ** owned) - 1) + costConstant;
 }
 
 // #endregion
@@ -276,13 +278,10 @@ function drawInventory()
     {
         for(let key2 in upgrades[key1])
         {
-            if(upgrades[key1][key2].owned > 0)
-            {
-                template +=
-                `
-                <p class="my-2 text-warning">${upgrades[key1][key2].name}: x${Math.floor(upgrades[key1][key2].owned)}</p>
-                `;
-            }
+            template +=
+            `
+            <p class="my-2 text-warning">${upgrades[key1][key2].name}: x${Math.floor(upgrades[key1][key2].owned)}</p>
+            `;
         }
     }
 
@@ -351,7 +350,7 @@ function drawShop()
         <button class="my-1 d-flex btn btn-warning" onclick="purchaseUpgrade('clickMultipliers', '${key}')" title="${item.name}">
             <hr>
             <div class="d-flex flex-column text-end me-1">
-                <span class="text-light ms-1">+${item.efficacy}/s</span>
+                <span class="text-light ms-1">+${item.efficacy}x</span>
                 <span class="text-light ms-1">${getItemCost(item)} Cheese</span>
             </div>
             <span class="my-auto">${item.shopname}</span>
@@ -371,7 +370,7 @@ function drawShop()
         <button class="my-1 d-flex btn btn-warning" onclick="purchaseUpgrade('globalMultipliers', '${key}')" title="${item.name}">
             <hr>
             <div class="d-flex flex-column text-end me-1">
-                <span class="text-light ms-1">+${item.efficacy}/s</span>
+                <span class="text-light ms-1">+${item.efficacy}x</span>
                 <span class="text-light ms-1">${getItemCost(item)} Cheese</span>
             </div>
             <span class="my-auto">${item.shopname}</span>
@@ -383,6 +382,10 @@ function drawShop()
 }
 
 // #endregion
+
+drawShop();
+drawInventory();
+drawStats();
 
 setInterval(updateManualClicks, 1000);
 setInterval(autoClick, 1000);

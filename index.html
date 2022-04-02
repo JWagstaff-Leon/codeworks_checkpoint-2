@@ -22,8 +22,8 @@
             <div class="row">
 
                 <!-- NOTE click target -->
-                <div id="click-target" onclick="clickTarget()" class="col-md-4 col-12 order-md-2 order-1 px-2">
-                    
+                <div id="click-target d-flex align-items-center justify-content-center" onclick="clickTarget()" class="col-md-4 col-12 order-md-2 order-1 px-2">
+                    <img src="https://thiscatdoesnotexist.com/" alt="">
                 </div>
                 
                 <!-- NOTE stats -->
@@ -34,8 +34,8 @@
                         <p class="my-2 text-warning fs-3 text-center"><span id="total-gps">0</span> Cheese/second</p>
                         <hr class="my-1">
                         <p class="my-2 text-warning">Auto Gains/second: <span id="auto-gps">0</span></p>
-                        <p class="my-2 text-warning">Manual Clicks/second: <span id="manual-cps">0</span></p>
                         <p class="my-2 text-warning">Auto Clicks/second: <span id="auto-cps">0</span></p>
+                        <p class="my-2 text-warning">Manual Clicks/second: <span id="manual-cps">0</span></p>
                         <hr class="my-1">
                         <p class="my-2 text-warning">Click Multiplier: x<span id="click-multiplier">1</span></p>
                         <p class="my-2 text-warning">Global Multiplier: x<span id="global-multiplier">1</span></p>
@@ -44,7 +44,7 @@
                 </div>
 
                 <!-- NOTE inventory -->
-                <div class="col-md-4 col-12 order-md-3 order-4 text-center">
+                <div class="col-md-4 col-12 order-md-3 order-2 text-center">
                     <h1 class="text-warning m-0">INVENTORY</h1>
                     <div id="inventory" class="rounded px-2">
                         
@@ -58,32 +58,29 @@
                 </div>
 
                 <!-- NOTE store -->
-                <div class="col-md-9 col-12 order-md-4 order-2 mt-3">
-                    <h1 class="text-warning my-2">SHOP</h1>
+                <div class="col-md-9 col-12 order-md-4 order-4 mt-3">
+                    <h1 class="text-warning my-2 text-center text-md-left">SHOP</h1>
                     <div id="store" class="rounded px-2">
                         <div class="row">
 
-                            <div class="col-3 d-flex flex-column">
-                                <h5 class="text-warning">Auto Gainers</h5>
-                                <div id="auto-gainers">
-                                    <!-- begin store template -->
-                                    <!-- end store template -->
-                                </div>
-                            </div>
-
-                            <div class="col-3 d-flex flex-column">
+                            <div class="col-6 col-md-3 d-flex flex-column">
                                 <h5 class="text-warning">Auto Clickers</h5>
-                                <div id="auto-clickers"></div>
+                                <div id="auto-clickers"><!-- Auto Clickers Shop Column--></div>
                             </div>
 
-                            <div class="col-3 d-flex flex-column">
+                            <div class="col-6 col-md-3 d-flex flex-column">
                                 <h5 class="text-warning">Click Multiplers</h5>
-                                <div id="click-multipliers"></div>
+                                <div id="click-multipliers"><!-- Click Multipliers Shop Column--></div>
                             </div>
 
-                            <div class="col-3 d-flex flex-column">
+                            <div class="col-6 col-md-3 d-flex flex-column">
+                                <h5 class="text-warning">Auto Gainers</h5>
+                                <div id="auto-gainers"><!-- Auto Gainers Shop Column--></div>
+                            </div>
+
+                            <div class="col-6 col-md-3 d-flex flex-column">
                                 <h5 class="text-warning">Global Multiplers</h5>
-                                <div id="global-multipliers"></div>
+                                <div id="global-multipliers"><!-- Global Multipliers Shop Column--></div>
                             </div>
                         </div>
                     </div>

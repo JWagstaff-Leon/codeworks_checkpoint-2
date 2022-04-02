@@ -19,10 +19,16 @@ main
 
 #click-target
 {
-    min-height: 50vh;
+    height: 50vh;
 }
 
 p,span,h1,h2,h3,h4,h5,h6
 {
     user-select: none;
+}
+
+img
+{
+    max-height: 100%;
+    max-width: 100%;
 }
