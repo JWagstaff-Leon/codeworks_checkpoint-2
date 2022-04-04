@@ -1,7 +1,6 @@
 // TODO balance changes
-// TODO fix click frequency being slow
-// TODO add saving
 // TODO add grouping large mumbers by size (10k 10m 10b 10t etc)
+
 // #region variables
 
 const player = 
@@ -268,6 +267,7 @@ function exponential(growBase, growFactor, owned, costConstant)
 
 function drawInventory()
 {
+    saveGame();
     elements.lifetimeResource.innerText = Math.floor(player.lifetimeResource.toString());
     
     elements.currentResource.innerText = Math.floor(player.resource.toString());
@@ -307,13 +307,13 @@ function drawShop()
         const item = upgrades.autoGainers[key];
         template +=
         `
-        <button class="my-1 d-flex btn btn-warning" onclick="purchaseUpgrade('autoGainers', '${key}')" title="${item.name}">
+        <button class="my-1 d-flex btn ${player.resource > getItemCost(item) ? "btn-warning text-light\"" : "btn-secondary text-dark\" disabled"} onclick="purchaseUpgrade('autoGainers', '${key}')" title="${item.name}">
             <hr>
             <div class="d-flex flex-column text-end me-1">
                 <span class="text-light ms-1">+${item.efficacy}/s</span>
                 <span class="text-light ms-1">${getItemCost(item)} Cheese</span>
             </div>
-            <span class="my-auto">${item.shopname}</span>
+            <span class="my-auto shopname">${item.shopname}</span>
         </button>
         `;
     }
@@ -327,13 +327,13 @@ function drawShop()
         const item = upgrades.autoClickers[key];
         template +=
         `
-        <button class="my-1 d-flex btn btn-warning" onclick="purchaseUpgrade('autoClickers', '${key}')" title="${item.name}">
+        <button class="my-1 d-flex btn ${player.resource > getItemCost(item) ? "btn-warning text-light\"" : "btn-secondary text-dark\" disabled"} onclick="purchaseUpgrade('autoClickers', '${key}')" title="${item.name}">
             <hr>
             <div class="d-flex flex-column text-end me-1">
                 <span class="text-light ms-1">+${item.efficacy}/s</span>
                 <span class="text-light ms-1">${getItemCost(item)} Cheese</span>
             </div>
-            <span class="my-auto">${item.shopname}</span>
+            <span class="my-auto shopname">${item.shopname}</span>
         </button>
         `;
     }
@@ -347,13 +347,13 @@ function drawShop()
         const item = upgrades.clickMultipliers[key];
         template +=
         `
-        <button class="my-1 d-flex btn btn-warning" onclick="purchaseUpgrade('clickMultipliers', '${key}')" title="${item.name}">
+        <button class="my-1 d-flex btn ${player.resource > getItemCost(item) ? "btn-warning text-light\"" : "btn-secondary text-dark\" disabled"} onclick="purchaseUpgrade('clickMultipliers', '${key}')" title="${item.name}">
             <hr>
             <div class="d-flex flex-column text-end me-1">
                 <span class="text-light ms-1">+${item.efficacy}x</span>
                 <span class="text-light ms-1">${getItemCost(item)} Cheese</span>
             </div>
-            <span class="my-auto">${item.shopname}</span>
+            <span class="my-auto shopname">${item.shopname}</span>
         </button>
         `;
     }
@@ -367,13 +367,13 @@ function drawShop()
         const item = upgrades.globalMultipliers[key];
         template +=
         `
-        <button class="my-1 d-flex btn btn-warning" onclick="purchaseUpgrade('globalMultipliers', '${key}')" title="${item.name}">
+        <button class="my-1 d-flex btn ${player.resource > getItemCost(item) ? "btn-warning text-light\"" : "btn-secondary text-dark\" disabled"} onclick="purchaseUpgrade('globalMultipliers', '${key}')" title="${item.name}">
             <hr>
             <div class="d-flex flex-column text-end me-1">
                 <span class="text-light ms-1">+${item.efficacy}x</span>
                 <span class="text-light ms-1">${getItemCost(item)} Cheese</span>
             </div>
-            <span class="my-auto">${item.shopname}</span>
+            <span class="my-auto shopname">${item.shopname}</span>
         </button>
         `;
     }
@@ -382,6 +382,40 @@ function drawShop()
 }
 
 // #endregion
+
+function saveGame()
+{
+    window.localStorage.setItem("mm_player", JSON.stringify(player));
+    window.localStorage.setItem("mm_upgrades", JSON.stringify(upgrades));
+}
+
+function loadGame()
+{
+    const loadedPlayer = JSON.parse(window.localStorage.getItem("mm_player"));
+    const loadedUpgrades = JSON.parse(window.localStorage.getItem("mm_upgrades"));
+
+    if(loadedPlayer && loadedUpgrades)
+    {
+        for(let key in loadedPlayer)
+        {
+            console.log("loadedplayer[key]", key)
+            player[key] = loadedPlayer[key];
+        }
+        
+        // NOTE It's ugly, but it avoids JSON.stringify ignoring function properties of objects
+        for(let key1 in loadedUpgrades)
+        {
+            for(let key2 in loadedUpgrades[key1])
+            {
+                upgrades[key1][key2].owned = loadedUpgrades[key1][key2].owned;
+            }
+        }
+    }
+
+    saveGame();
+}
+
+loadGame();
 
 drawShop();
 drawInventory();
