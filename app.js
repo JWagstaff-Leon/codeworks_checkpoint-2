@@ -398,7 +398,6 @@ function loadGame()
     {
         for(let key in loadedPlayer)
         {
-            console.log("loadedplayer[key]", key)
             player[key] = loadedPlayer[key];
         }
         
